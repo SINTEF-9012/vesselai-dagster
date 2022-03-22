@@ -3,14 +3,16 @@ import sys; sys.path.append('/Users/volkerh/Work_SINTEF/src/nwpstuff')
 import nwpstuff
 
 
-def download_nwp():
+@op(config_schema={'date': str, 'force': bool})
+def download_nwp(context):
     """
     An op definition. This example op outputs a single string.
 
     For more hints about writing Dagster ops, see our documentation overview on Ops:
     https://docs.dagster.io/concepts/ops-jobs-graphs/ops
     """
-    date='2019-01-01'
     basedir='/tmp'
-    nwpstuff.download_nwp(date, basedir, force=True)
+    nwpstuff.download_nwp(context.op_config['date'], 
+                          basedir, 
+                          force=context.op_config['force'])
     return "Downloaded!"
